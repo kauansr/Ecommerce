@@ -1,0 +1,1 @@
+from .produtosviews import *
