@@ -7,7 +7,7 @@ choices_categorias = [
 ]
 
 class Produtos(models.Model):
-    produto_imagem = models.ImageField(upload_to='imagems/produtos')
+    produto_imagem = models.ImageField(upload_to='produtos')
     nome = models.CharField(max_length=50, null=False, blank=False, unique=True)
     descricao = models.TextField(blank=False, null=False)
     categoria = models.CharField(max_length=50, null=False, blank=False, choices=choices_categorias)

@@ -7,6 +7,7 @@ from pedidos.serializers import PedidosSerializers
 from rest_framework import status
 import jwt
 from project.settings import SECRET_KEY
+from products.models import Produtos
 
 class PedidosAPI(APIView):
 
@@ -16,16 +17,20 @@ class PedidosAPI(APIView):
 
         jwt_encode = self.request.META['HTTP_AUTHORIZATION']
 
+     
         jwt_clean = jwt_encode.split(" ")
 
         jwt_bearer = jwt_clean[0]
+ 
         if not jwt_bearer:
             raise ValueError('Token invalido!!')
         
-        if jwt_bearer[0] != 'Bearer':
+        if jwt_bearer != 'Bearer':
             raise ValueError('Inavlid token !!!')
 
+        
         jwt_decode = jwt.decode(jwt_clean[1], SECRET_KEY, algorithms=['HS256'])
+ 
 
         return (jwt_decode, None)
 
@@ -39,6 +44,7 @@ class PedidosAPI(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
         
         ped = Pedidos.objects.filter(email=data_user[0]['email'])
+     
         serializer = PedidosSerializers(ped, many=True)
 
         return Response(serializer.data)
@@ -49,7 +55,25 @@ class PedidosAPI(APIView):
     
     def post(self, request):
 
-        serializer = PedidosSerializers(data=request.data)
+        data_user = self.decode_jwttoken()
+
+         
+
+        if not data_user[0]['email']:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+         
+
+        id_prod = request.data['id']
+        produt = Produtos.objects.filter(id=id_prod).first()
+
+       
+        data = {
+            'nome_pedido': produt.nome,
+            'preco': produt.preco,
+            'email': data_user[0]['email']
+  
+        }
+        serializer = PedidosSerializers(data=data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

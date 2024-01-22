@@ -1,0 +1,40 @@
+.produtospage {
+    display: flex;
+    flex-direction: column-reverse;
+    margin: 5em;
+}
+
+.produtospage div form div input {
+    border: 0;
+    font-size: medium;
+}
+
+.produtospage div {
+    display: flex;
+    margin: 10px;
+
+}
+
+.produtospage div {
+    display: block;
+    background-color: rgb(240, 240, 240);
+}
+
+.produtospage div div {
+    display: flex;
+
+}
+
+
+.produtospage div div button {
+    display: block;
+    padding: 3px;
+    width: 50%;
+    border: 1px solid rgb(59, 59, 59);
+    border-radius: 2px;
+}
+
+.produtospage div div button:hover {
+    background-color: rgb(185, 185, 185);
+    transition: 1s;
+}

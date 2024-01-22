@@ -8,6 +8,8 @@ static/
 media/
 project/local_settings.py
 imagems
+media
+imgs
 
 # Backup files #
 *.bak
