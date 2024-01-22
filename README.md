@@ -12,7 +12,7 @@ Lista de recursos não adicionados:
 
 ## Como usar windows ?
 - git clone https://github.com/kauansr/Loja.git
-- cd Projeto-sitepizzaria
+- cd Loja
 - python -m venv venv
 - venv\Scripts\activate.bat
 - pip install -r requirements.txt
