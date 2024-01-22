@@ -1,3 +1,6 @@
+# ~~~~~~~~~~~~ EM ANDAMENTO ~~~~~~~~~~~~
+
+
 # Loja
 - Site de vendas focado na vendas de qualquer produto feito em python e js, utilizando Django, Django Rest Framework e React.Js
 - Tecnologias utilizadas estão em requirements.txt
