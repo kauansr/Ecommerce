@@ -2,8 +2,8 @@
 
 
 # Loja
-- Site de vendas focado na vendas de qualquer produto feito em python e js, utilizando Django, Django Rest Framework e React.Js
-- Tecnologias utilizadas estão em requirements.txt
+- Site de vendas focado na vendas de qualquer produto
+- Tecnologias utilizadas Python, Django, React.Js e outros recursos estão em requirements.txt
 
 ## Este projeto NÃO inclui
 Lista de recursos não adicionados:
