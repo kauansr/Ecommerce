@@ -14,9 +14,15 @@ Lista de recursos não adicionados:
 
 
 ## Como usar windows ?
+Rodar o Backend:
 - git clone https://github.com/kauansr/Loja.git
 - cd Loja
 - python -m venv venv
 - venv\Scripts\activate.bat
 - pip install -r requirements.txt
+- cd backend
 - rode python manage.py runserver
+
+Rodar o frontend:
+- cd frontend
+- npm start
