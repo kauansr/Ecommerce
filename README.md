@@ -19,4 +19,4 @@ Lista de recursos não adicionados:
 - python -m venv venv
 - venv\Scripts\activate.bat
 - pip install -r requirements.txt
-- rode o arquivo main
+- rode python manage.py runserver
