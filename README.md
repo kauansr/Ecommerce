@@ -1,5 +1,5 @@
 # ~~~~~~~~~~~~ EM ANDAMENTO ~~~~~~~~~~~~
-            O Site esta em andamento!
+
 
 # Loja
 - Site de vendas focado na vendas de qualquer produto
