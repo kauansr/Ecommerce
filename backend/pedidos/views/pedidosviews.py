@@ -106,7 +106,7 @@ class PedidoAPI(APIView):
         if not jwt_bearer:
             raise ValueError('Token invalido!!')
         
-        if jwt_bearer[0] != 'Bearer':
+        if jwt_bearer != 'Bearer':
             raise ValueError('Inavlid token !!!')
 
         jwt_decode = jwt.decode(jwt_clean[1], SECRET_KEY, algorithms=['HS256'])

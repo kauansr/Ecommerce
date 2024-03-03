@@ -40,7 +40,7 @@ function PedidosPage() {
                 posts.map((post) => (
 
                     <div key={post.id} >
-
+                        <div><p>{post.id}</p></div>
                         <div><p>{post.nome_pedido}</p></div>
                         <div><p>Preco: {post.preco}</p></div>
                         <div><p>Status de entrega: {post.entrega_status}</p></div>

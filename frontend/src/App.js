@@ -4,6 +4,7 @@ import ProdutosPage from './pages/productpage/ProdutosPage';
 import CadastrouserPage from './pages/cadastropage/cadastrouserpage'
 import PedidosPage from './pages/pedidospage/PedidosPage';
 import UmProduto from './pages/productpage/ProdutoPage';
+import UmPedido from './pages/pedidospage/PedidoPage';
 
 function App() {
   return (
@@ -15,10 +16,11 @@ function App() {
           <Route exact path="/sign-up" element={<CadastrouserPage />} />
           <Route exact path="/pedidos" element={<PedidosPage />} />
           <Route exact path='/produto/:id' element={<UmProduto />} />
+          <Route exact path='/pedido/:id' element={<UmPedido />} />
         </Routes>
 
       </Router>
-    </div>
+    </div >
   );
 }
 
