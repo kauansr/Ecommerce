@@ -1,0 +1,48 @@
+.produtopage {
+    display: flex;
+    flex-direction: column-reverse;
+    margin: 5em;
+}
+
+.produtopage div div h2 {
+    margin: 10px;
+    padding: 5px;
+}
+
+.produtopage div div h3 {
+    font-size: large;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 10px;
+
+}
+
+.produtopage div {
+    display: flex;
+    margin: 10px;
+
+}
+
+.produtopage div {
+    display: block;
+    background-color: rgb(240, 240, 240);
+}
+
+
+.produtopage div div button {
+    display: block;
+    padding: 4px;
+    margin: auto;
+    width: 50%;
+    border: 1px solid rgb(59, 59, 59);
+    border-radius: 4px;
+}
+
+.produtopage div div button:hover {
+    background-color: rgb(185, 185, 185);
+    transition: 1s;
+}
+
+
+.produtopage div div img {
+    margin: 10px;
+}

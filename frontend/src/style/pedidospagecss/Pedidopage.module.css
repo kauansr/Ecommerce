@@ -1,40 +1,37 @@
-.produtospage {
+.pedidospage {
     display: flex;
     flex-direction: column-reverse;
-    margin: 5em;
+    margin: 10em;
 }
 
-.produtospage div form div input {
+.pedidospage div form div input {
     border: 0;
     font-size: medium;
 }
 
-.produtospage div {
+.pedidospage div {
     display: flex;
     margin: 10px;
 
 }
 
-.produtospage div {
+.pedidospage div {
     display: block;
     background-color: rgb(240, 240, 240);
 }
 
-.produtospage div div {
-    display: flex;
-
-}
 
 
-.produtospage div div button {
+.pedidospage div div button {
     display: block;
     padding: 3px;
-    width: 50%;
+    width: auto;
     border: 1px solid rgb(59, 59, 59);
     border-radius: 4px;
+    font-size: medium;
 }
 
-.produtospage div div button:hover {
-    background-color: rgb(185, 185, 185);
+.pedidospage div div button:hover {
+    background-color: rgb(211, 42, 42);
     transition: 1s;
 }

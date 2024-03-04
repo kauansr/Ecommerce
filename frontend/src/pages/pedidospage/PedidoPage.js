@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import style from '../../style/produtospagecss/Produtos.module.css'
+import style from '../../style/pedidospagecss/Pedidopage.module.css'
 
 function UmPedido() {
 
@@ -52,7 +52,7 @@ function UmPedido() {
 
             {posts.length === 0 ? <p>Vazio...</p> : (
 
-                <div className={style.produtospage}>
+                <div className={style.pedidospage}>
                     <div key={posts.id}>
                         <div><h2> {posts.nome_pedido}
                         </h2></div>

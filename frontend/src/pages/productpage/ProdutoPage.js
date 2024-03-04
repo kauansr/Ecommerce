@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import style from '../../style/produtospagecss/Produtos.module.css'
+import style from '../../style/produtospagecss/Produto.module.css'
 
 function UmProduto() {
 
@@ -52,10 +52,11 @@ function UmProduto() {
 
             {posts.length === 0 ? <p>Vazio...</p> : (
 
-                <div className={style.produtospage}>
+                <div className={style.produtopage}>
                     <div key={posts.id}>
-                        <div><h2> {posts.nome}
-                        </h2></div>
+                        <div><img src={`http://127.0.0.1:8000${posts.produto_imagem}`} alt={posts.produto_imagem} width='100' height='100'></img></div>
+                        <div><h2>{posts.nome}</h2></div>
+                        <div><h3>{posts.descricao}</h3></div><br></br><br></br>
                         <div><h3>R$: {posts.preco}</h3></div>
                         <br></br>
                         <div>
