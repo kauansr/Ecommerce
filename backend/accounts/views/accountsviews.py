@@ -56,58 +56,58 @@ class UserAPI(APIView):
         return (jwt_decode, None)
 
 
-    def get_object(self, pk):
+    def get_object(self, username):
 
         """
         Pega o usuario no banco de dados
         
-        :param int pk: dados da rota primary key
+        :param str username: dados da rota username
         :return: User
         :raise http404: erro 404
         """
 
         try:
-            return User.objects.get(pk=pk)
+            return User.objects.get(username=username)
         
         except User.DoesNotExist:
             raise Http404
 
-    def get(self, request, pk):
+    def get(self, request, username):
 
         """
         Rota get dos usuarios
 
-        :param int pk: dados da rota primary key
+        :param str username: dados da rota username
         :return: Json
         """
 
         data_usertoken = self.decode_jwttoken()
 
 
-        if data_usertoken[0]['id'] != pk:
+        if data_usertoken[0]['username'] != username:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        user = self.get_object(pk=pk)
+        user = self.get_object(username=username)
         serializer = UsersSerializer(user)
 
 
         return Response(serializer.data, status=status.HTTP_200_OK)
     
-    def put(self, request, pk):
+    def put(self, request, username):
         
         """
         Atualiza um dado do usuario
 
-        :param int pk: dados da rota primary key
+        :param str username: dados da rota username
         :return: Json
         """
 
         data_usertoken = self.decode_jwttoken()
 
-        if data_usertoken[0]['id'] != pk:
+        if data_usertoken[0]['username'] != username:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        user = self.get_object(pk=pk)
+        user = self.get_object(username=username)
         serializer = UsersSerializer(user, data=request.data)
 
         if serializer.is_valid(raise_exception=True):
@@ -116,21 +116,21 @@ class UserAPI(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    def delete(self, request, pk):
+    def delete(self, request, username):
 
         """
         Rota delete do usuario
 
-        :param int pk: primary key: dados da rota primary key
+        :param str username: dados da rota username
         :return: Response(http204)
         """
 
         data_usertoken = self.decode_jwttoken()
 
-        if data_usertoken[0]['id'] != pk:
+        if data_usertoken[0]['username'] != username:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        user = self.get_object(pk=pk)
+        user = self.get_object(username=username)
         user.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
