@@ -1,5 +1,5 @@
 # Loja
-- Site de vendas focado na vendas de qualquer produto
+- Site de vendas focado em vendas
 - Tecnologias utilizadas Python, Django, React.Js e outros recursos estão em requirements.txt
 
 ## Este projeto NÃO inclui
