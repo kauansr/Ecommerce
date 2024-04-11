@@ -1,5 +1,3 @@
-# ~~~~~~~~~~~~ EM ANDAMENTO ~~~~~~~~~~~~
-
 # Loja
 - Site de vendas focado na vendas de qualquer produto
 - Tecnologias utilizadas Python, Django, React.Js e outros recursos estão em requirements.txt
