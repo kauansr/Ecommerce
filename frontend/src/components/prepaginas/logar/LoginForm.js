@@ -45,15 +45,20 @@ function LoginForm() {
 
     return (
         <div className={style.loginform}>
+            
             <div>
                 <form onSubmit={handleSubmit}>
-                    <input type='email' name='email' onChange={handleInput} placeholder='Insira seu E-mail'></input><br /><br />
-                    <input type='password' name='password' onChange={handleInput} placeholder='Insira sua senha'></input><br /><br />
+                    <input type='email' name='email' onChange={handleInput} placeholder='E-mail'></input><br /><br />
+                    <input type='password' name='password' onChange={handleInput} placeholder='Password'></input><br /><br />
 
-                    <button type='submit'>Login</button>
+                    <button type='submit'>Sign-in</button>
 
 
-                </form></div>
+                </form>
+                <ul>
+            <li>Don't have an account ?<a href="/sign-up">Sign-up</a></li>
+            </ul>
+                </div>
 
         </div>
     )

@@ -1,15 +1,39 @@
-.loginform {
+.loginform div{
     display: block;
     margin: auto;
     margin-top: 10rem;
-    width: 50%;
+    width: 25%;
     border: 1px solid rgb(0, 0, 0);
-    background-color: rgba(197, 197, 197, 0.281);
+    background-color: rgb(238, 235, 235);
     padding: 10rem;
     border-radius: 4px;
 }
 
+.loginform ul{
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    justify-content: right;
 
+}
+.loginform ul li{
+    display: flex;
+    padding: 15px;
+    font-size: 13px;
+}
+
+.loginform ul li a{
+    display: flex;
+    color: rgb(52, 0, 119);
+    text-decoration: none;
+    padding-left: 15px;
+}
+
+.loginform ul li a:hover{
+    color: rgb(99, 97, 97);
+    transition: 1s;
+}
 
 .loginform form input {
     display: block;

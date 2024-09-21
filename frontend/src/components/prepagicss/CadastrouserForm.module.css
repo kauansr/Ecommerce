@@ -1,4 +1,4 @@
-.cadastrouserform {
+.cadastrouserform div{
     display: block;
     margin: auto;
     margin-top: 10rem;
@@ -9,7 +9,26 @@
     border-radius: 4px;
 }
 
+.cadastrouserform ul{
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    justify-content: right;
 
+}
+.cadastrouserform ul li{
+    display: flex;
+    padding: 15px;
+    font-size: 13px;
+}
+
+.cadastrouserform ul li a{
+    display: flex;
+    color: rgb(52, 0, 119);
+    text-decoration: none;
+    padding-left: 15px;
+}
 
 .cadastrouserform form input {
     display: block;
@@ -38,7 +57,7 @@
 }
 
 .cadastrouserform form button:hover {
-    background-color: rgb(180, 180, 180);
+  background-color: rgb(180, 180, 180);
     transition: 1s;
 
 }

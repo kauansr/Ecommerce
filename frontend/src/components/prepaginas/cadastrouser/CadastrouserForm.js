@@ -38,16 +38,21 @@ function CadastrouserForm() {
 
     return (
         <div className={style.cadastrouserform}>
+
             <div>
                 <form onSubmit={handleSubmit}>
-                    <input type='text' name='username' onChange={handleInput} placeholder='Insira seu Username'></input><br /><br />
-                    <input type='email' name='email' onChange={handleInput} placeholder='Insira seu E-mail'></input><br /><br />
-                    <input type='password' name='password' onChange={handleInput} placeholder='Insira sua senha'></input><br /><br />
+                    <input type='text' name='username' onChange={handleInput} placeholder='Username'></input><br /><br />
+                    <input type='email' name='email' onChange={handleInput} placeholder='E-mail'></input><br /><br />
+                    <input type='password' name='password' onChange={handleInput} placeholder='Password'></input><br /><br />
 
-                    <button type='submit'>Cadastrar</button>
+                    <button type='submit'>Sign-up</button>
 
 
-                </form></div>
+                </form>
+                <ul>
+            <li>Do you have an account ?<a href="/login">Sign-in</a></li>
+            </ul>
+                </div>
 
         </div>
     )
