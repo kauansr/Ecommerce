@@ -8,6 +8,7 @@ from rest_framework import status
 import jwt
 from project.settings import SECRET_KEY
 from products.models import Produtos
+from accounts.models import User
 
 class PedidosAPI(APIView):
 
@@ -43,7 +44,7 @@ class PedidosAPI(APIView):
         if not data_user[0]['email']:
             return Response(status=status.HTTP_404_NOT_FOUND)
         
-        ped = Pedidos.objects.filter(email=data_user[0]['email'])
+        ped = Pedidos.objects.filter(email=data_user[0]['id'])
      
         serializer = PedidosSerializers(ped, many=True)
 
@@ -64,13 +65,19 @@ class PedidosAPI(APIView):
          
 
         id_prod = request.data['id']
+        id_user = User.objects.filter(id=data_user[0]['id']).first()
+
+        if not id_user.email:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
+        
         produt = Produtos.objects.filter(id=id_prod).first()
 
        
         data = {
             'nome_pedido': produt.nome,
             'preco': produt.preco,
-            'email': data_user[0]['email']
+            'email': id_user.id
   
         }
         serializer = PedidosSerializers(data=data)

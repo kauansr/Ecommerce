@@ -16,7 +16,7 @@ function ProdutosPage() {
         try {
 
             const tokenauth = localStorage.getItem('token')
-            const res = await axios.get("http://127.0.0.1:8000/productapi/produtos/", { headers: { 'Authorization': `Bearer ${tokenauth}` } })
+            const res = await axios.get("http://127.0.0.1:8000/productapi/produtos/")
 
 
 

@@ -73,7 +73,7 @@ def get_object(pk):
     
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+@permission_classes([])
 def ver_produtos(request):
     produtos = Produtos.objects.all()
     serializer = ProdutosSerializer(produtos, many=True)
@@ -82,7 +82,7 @@ def ver_produtos(request):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+@permission_classes([])
 def ver_produto(request, pk):
 
     produto = get_object(pk=pk)

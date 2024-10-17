@@ -16,7 +16,7 @@ function UmProduto() {
         try {
 
             const tokenauth = localStorage.getItem('token')
-            const res = await axios.get(`http://localhost:8000/productapi/produtos/${id}`, { headers: { 'Authorization': `Bearer ${tokenauth}` } })
+            const res = await axios.get(`http://localhost:8000/productapi/produtos/${id}`)
 
 
 
