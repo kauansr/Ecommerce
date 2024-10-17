@@ -1,6 +1,6 @@
 # Loja
 - Site focado em vendas
-- Tecnologias utilizadas Python, Django, React.Js e outros recursos estão em requirements.txt
+- Tecnologias utilizadas Python, Django Rest Framework e React.Js e outros recursos estão em requirements.txt
 
 ## Este projeto NÃO inclui
 Lista de recursos não adicionados:
