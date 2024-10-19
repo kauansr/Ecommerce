@@ -37,27 +37,29 @@ function ProdutosPage() {
     }, [])
 
     return (
-
         <div className={style.produtospage}>
-
-            {posts.length === 0 ? <p>Vazio...</p> : (
+            {posts.length === 0 ? (
+                <p>Carregando...</p>
+            ) : (
                 posts.map((post) => (
-                    <div key={post.id}>
-
-                        <div><img src={`http://127.0.0.1:8000${post.produto_imagem}`} alt={post.produto_imagem} width='100' height='100'></img><div><p>{post.nome}</p></div></div>
-                        <div><p>{post.categoria}</p></div>
-                        <Link to={`/produto/${post.id}`}><div><button>{post.preco}</button></div> </Link>
-
+                    <div key={post.id} className={style.produto}>
+                        <img 
+                            src={`http://127.0.0.1:8000${post.produto_imagem}`} 
+                            alt={post.nome} 
+                            width='100' 
+                            height='100' 
+                        />
+                        <p className={style.nome}>{post.nome}</p>
+                        <p className={style.categoria}>{post.categoria}</p>
+                        <p className={style.descricao}>{post.descricao}</p>
+                        <Link to={`/produto/${post.id}`}>
+                            <button className={style.botao}>R$: {post.preco}</button>
+                        </Link>
                     </div>
-
-
                 ))
-            )
-
-            }
-
+            )}
         </div>
-    )
+    );
 
 
 }

@@ -5,74 +5,61 @@ import style from '../../style/produtospagecss/Produto.module.css'
 
 function UmProduto() {
 
-    const [posts, setPosts] = useState([])
+    const [post, setPost] = useState(null); 
 
     const navigate = useNavigate()
-    const { id } = useParams()
-
+    const {id} = useParams()
 
     const getPost = async () => {
-
         try {
-
-            const tokenauth = localStorage.getItem('token')
-            const res = await axios.get(`http://localhost:8000/productapi/produtos/${id}`)
-
-
-
-            setPosts(res.data)
-
-
-
+            const tokenauth = localStorage.getItem('token');
+            const res = await axios.get(`http://localhost:8000/productapi/produtos/${id}`);
+            
+            setPost(res.data);
         } catch (error) {
-            console.log(error)
-
+            console.log(error);
         }
-
-
-    }
-
-
+    };
+    
     useEffect(() => {
-        getPost()
-    }, [])
-
+        getPost();
+    }, []);
+    
     const handleSubmit = data => {
-        data.preventDefault()
-        const tokenauth = localStorage.getItem('token')
-
+        data.preventDefault();
+        const tokenauth = localStorage.getItem('token');
+    
         axios.post(`http://127.0.0.1:8000/pedidoapi/pedidos/`, { id: id }, { headers: { 'Authorization': `Bearer ${tokenauth}` } })
-            .then((res) => { navigate("/pedidos") })
-            .catch((err) => console.log(err))
-    }
+            .then((res) => { navigate("/pedidos"); })
+            .catch((err) => console.log(err));
+    };
+    
 
     return (
         <div>
-
-
-            {posts.length === 0 ? <p>Vazio...</p> : (
-
+            {post ? (
                 <div className={style.produtopage}>
-                    <div key={posts.id}>
-                        <div><img src={`http://127.0.0.1:8000${posts.produto_imagem}`} alt={posts.produto_imagem} width='100' height='100'></img></div>
-                        <div><h2>{posts.nome}</h2></div>
-                        <div><h3>{posts.descricao}</h3></div><br></br><br></br>
-                        <div><h3>R$: {posts.preco}</h3></div>
-                        <br></br>
-                        <div>
-                            <form onSubmit={handleSubmit}>
-                                <button type="submit">Pedir</button>
-                            </form>
-                        </div><br></br>
-
+                    <div key={post.id} className={style.produto}>
+                        <img 
+                            src={`http://127.0.0.1:8000${post.produto_imagem}`} 
+                            alt={post.nome} 
+                            width='100' 
+                            height='100' 
+                        />
+                        <h2>{post.nome}</h2>
+                        <h3>{post.categoria}</h3>
+                        <h3>{post.descricao}</h3>
+                        <h3>R$: {post.preco}</h3>
+                        <form onSubmit={handleSubmit}>
+                            <button type="submit">Pedir</button>
+                        </form>
                     </div>
                 </div>
-
-            )
-
-            }
-        </div >
-    )
+            ) : (
+                <p>Vazio...</p>
+            )}
+        </div>
+    );
+    
 }
-
 export default UmProduto
