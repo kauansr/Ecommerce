@@ -1,6 +1,5 @@
 # Loja
 - Site focado em vendas
-- Tecnologias utilizadas Python, Django Rest Framework e React.Js e outros recursos estão em requirements.txt
 
 ## Tecnologias usadas
 - Python -> Linguagem de programacao usada para fazer a logica do backend
