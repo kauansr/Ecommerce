@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
-import style from '../../style/produtospagecss/Produtos.module.css'
+import style from '../../style/pedidospagecss/Pedidopage.module.css'
+import { Link } from 'react-router-dom'
 
 function PedidosPage() {
 
@@ -33,27 +34,23 @@ function PedidosPage() {
     }, [])
 
     return (
-
-        <div className={style.produtospage}>
-
-            {posts.length === 0 ? <p>Vazio...</p> : (
+        <div className={style.pedidospage}>
+            {posts.length === 0 ? (
+                <p>Vazio...</p>
+            ) : (
                 posts.map((post) => (
-
-                    <div key={post.id} >
-                        <div><p>{post.id}</p></div>
-                        <div><p>{post.nome_pedido}</p></div>
-                        <div><p>Preco: {post.preco}</p></div>
-                        <div><p>Status de entrega: {post.entrega_status}</p></div>
+                    <div key={post.id}>
+                        <Link to={`/pedido/${post.id}`}>
+                        <p>ID: {post.id}</p> </Link>
+                        <p>Nome do Pedido: {post.nome_pedido}</p>
+                        <p>Preço: {post.preco}</p>
+                        <p>Status de Entrega: {post.entrega_status}</p>
                     </div>
-
-
                 ))
-            )
-
-            }
-
+            )}
         </div>
-    )
+    );
+    
 
 
 }

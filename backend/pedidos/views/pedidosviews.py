@@ -44,7 +44,7 @@ class PedidosAPI(APIView):
         if not data_user[0]['email']:
             return Response(status=status.HTTP_404_NOT_FOUND)
         
-        ped = Pedidos.objects.filter(email=data_user[0]['id'])
+        ped = Pedidos.objects.filter(user_id=data_user[0]['id'])
      
         serializer = PedidosSerializers(ped, many=True)
 
@@ -77,7 +77,8 @@ class PedidosAPI(APIView):
         data = {
             'nome_pedido': produt.nome,
             'preco': produt.preco,
-            'email': id_user.id
+            'user_id': id_user.id,
+            'email': id_user.email
   
         }
         serializer = PedidosSerializers(data=data)

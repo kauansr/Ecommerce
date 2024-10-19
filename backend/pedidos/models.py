@@ -10,7 +10,8 @@ status_entregachoice = [
 class Pedidos(models.Model):
     nome_pedido = models.CharField(max_length=50)
     preco = models.FloatField()
-    email = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users')
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users')
+    email = models.EmailField(max_length=255)
     entrega_status = models.CharField(max_length=20, choices=status_entregachoice, default='PREPARANDO...')
 
 

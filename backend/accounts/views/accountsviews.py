@@ -4,14 +4,14 @@ from accounts.models import User
 from accounts.serializers import UsersSerializer
 from django.http import Http404
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 import jwt
 from project.settings import SECRET_KEY
 
 
 class UsersAPI(APIView):
 
-    permission_classes = []
+    permission_classes = [IsAdminUser]
 
     def get(self, request):
 
@@ -30,7 +30,7 @@ class UsersAPI(APIView):
 
 class UserAPI(APIView):
 
-    permission_classes = []
+    permission_classes = [IsAuthenticated]
 
     def decode_jwttoken(self):
 
@@ -91,6 +91,7 @@ class UserAPI(APIView):
         serializer = UsersSerializer(user)
 
 
+
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     def put(self, request, username):
@@ -108,7 +109,7 @@ class UserAPI(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         user = self.get_object(username=username)
-        serializer = UsersSerializer(user, data=request.data)
+        serializer = UsersSerializer(user, data=request.data, context={'request': request})
 
         if serializer.is_valid(raise_exception=True):
             serializer.save()

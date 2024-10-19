@@ -1,0 +1,77 @@
+.pedidospage {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.pedidospage h2 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.pedidospage h3 {
+    font-size: 16px;
+    color: #666;
+    margin: 5px 0;
+}
+
+.pedidospage form {
+    margin-top: 15px;
+}
+
+.pedidospage button {
+    padding: 10px 15px;
+    font-size: 16px;
+    color: white;
+    background-color: #d9534f; /* Cor de botão de cancelar */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.pedidospage button:hover {
+    background-color: #c9302c; /* Cor de botão ao passar o mouse */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .pedidospage {
+        padding: 15px;
+    }
+
+    .pedidospage h2 {
+        font-size: 18px;
+    }
+
+    .pedidospage h3 {
+        font-size: 14px;
+    }
+
+    .pedidospage button {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .pedidospage {
+        padding: 10px;
+    }
+
+    .pedidospage h2 {
+        font-size: 16px;
+    }
+
+    .pedidospage h3 {
+        font-size: 12px;
+    }
+
+    .pedidospage button {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+}

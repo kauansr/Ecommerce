@@ -7,6 +7,9 @@ function Perfil() {
     const [posts, setPosts] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     const navigate = useNavigate();
     const { id } = useParams();
@@ -18,6 +21,8 @@ function Perfil() {
                 headers: { 'Authorization': `Bearer ${tokenauth}` }
             });
             setPosts(res.data);
+            setUsername(res.data.username);
+            setEmail(res.data.email);
         } catch (error) {
             setError(error.response?.data.error.message || 'Erro ao carregar os dados');
         } finally {
@@ -29,17 +34,49 @@ function Perfil() {
         getPost();
     }, [id]);
 
-    const handleSubmit = async (event) => {
+    const handleChange = async (event) => {
         event.preventDefault();
+
+        const tokenauth = localStorage.getItem('token');
+
+        try {
+            await axios.put(`http://localhost:8000/accountapi/accounts/${id}/`, 
+                {
+                    username,
+                    email,
+                    password
+                }, 
+                {
+                    headers: {
+                        'Authorization': `Bearer ${tokenauth}`,
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            setPosts({ ...posts, username, email });
+            localStorage.removeItem('token') 
+            navigate("/login");
+            alert("Dados atualizados com sucesso!");
+        } catch (err) {
+            setError('Erro ao atualizar os dados');
+        }
+    };
+
+    const handleDelete = async (event) => {
+        event.preventDefault();
+        if (!window.confirm("Tem certeza que deseja deletar sua conta?")) {
+            return;
+        }
+
         const tokenauth = localStorage.getItem('token');
 
         try {
             await axios.delete(`http://localhost:8000/accountapi/accounts/${id}/`, {
                 headers: { 'Authorization': `Bearer ${tokenauth}` }
             });
+            localStorage.removeItem('token')
             navigate("/login");
         } catch (err) {
-            console.log(err);
             setError('Erro ao deletar a conta');
         }
     };
@@ -51,13 +88,39 @@ function Perfil() {
         <div>
             {posts ? (
                 <div className={style.perfilpage}>
-                    <div key={posts.id}>
-                        <h2>{posts.username}</h2>
-                        <h3>{posts.email}</h3>
-                        <h3>{posts.data_joined}</h3>
-                        <form onSubmit={handleSubmit}>
-                            <button type="submit">Deletar</button>
+                    <h2>Username: {posts.username}</h2>
+                    <h3>E-mail: {posts.email}</h3>
+                    <h3>Criado em: {new Date(posts.data_joined).toLocaleDateString()}</h3>
+    
+                    <div>
+                        <form onSubmit={handleChange}>
+                            <input 
+                                type="text" 
+                                value={username} 
+                                onChange={(e) => setUsername(e.target.value)} 
+                                placeholder="Username" 
+                            />
+                            <input 
+                                type="email" 
+                                value={email} 
+                                onChange={(e) => setEmail(e.target.value)} 
+                                placeholder="E-mail" 
+                            />
+                            <input 
+                                type="password" 
+                                value={password} 
+                                onChange={(e) => setPassword(e.target.value)} 
+                                placeholder="Senha" 
+                            />
+                            <button type="submit">Mudar Dados</button>
                         </form>
+    
+                        {}
+                        <div className={style['button-container']}>
+                            <form onSubmit={handleDelete}>
+                                <button type="submit">Deletar Conta</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             ) : (
@@ -65,6 +128,7 @@ function Perfil() {
             )}
         </div>
     );
+    
 }
 
 export default Perfil;

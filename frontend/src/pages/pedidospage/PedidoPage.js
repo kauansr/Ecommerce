@@ -1,79 +1,66 @@
-import axios from "axios"
-import { useState, useEffect } from "react"
-import { useNavigate, useParams } from "react-router-dom"
-import style from '../../style/pedidospagecss/Pedidopage.module.css'
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import style from '../../style/pedidospagecss/Pedido.module.css';
 
 function UmPedido() {
-
-    const [posts, setPosts] = useState([])
-
-    const navigate = useNavigate()
-    const { id } = useParams()
-
+    const [post, setPost] = useState(null); // Alterado para um único pedido
+    const [error, setError] = useState(null); // Para armazenar erros
+    const navigate = useNavigate();
+    const { id } = useParams();
 
     const getPost = async () => {
-
         try {
-
-            const tokenauth = localStorage.getItem('token')
-            const res = await axios.get(`http://127.0.0.1:8000/pedidoapi/pedidos/${id}`, { headers: { 'Authorization': `Bearer ${tokenauth}` } })
-
-
-
-            setPosts(res.data)
-
-
-
+            const tokenauth = localStorage.getItem('token');
+            const res = await axios.get(`http://127.0.0.1:8000/pedidoapi/pedidos/${id}`, {
+                headers: { 'Authorization': `Bearer ${tokenauth}` }
+            });
+            setPost(res.data);
         } catch (error) {
-            console.log(error)
-
+            setError("Erro ao carregar o pedido.");
         }
-
-
-    }
-
+    };
 
     useEffect(() => {
-        getPost()
-    }, [])
+        getPost();
+    }, []);
 
-    const handleSubmit = data => {
-        data.preventDefault()
-        const tokenauth = localStorage.getItem('token')
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const tokenauth = localStorage.getItem('token');
 
-        axios.delete(`http://127.0.0.1:8000/pedidoapi/pedidos/${id}`, { headers: { 'Authorization': `Bearer ${tokenauth}` } })
-            .then((res) => { navigate("/pedidos") })
-            .catch((err) => console.log(err))
-    }
+        try {
+            await axios.delete(`http://127.0.0.1:8000/pedidoapi/pedidos/${id}`, {
+                headers: { 'Authorization': `Bearer ${tokenauth}` }
+            });
+            navigate("/pedidos");
+        } catch (err) {
+            setError("Erro ao cancelar o pedido."); 
+        }
+    };
 
     return (
         <div>
-
-
-            {posts.length === 0 ? <p>Vazio...</p> : (
-
+            {error && <p>{error}</p>} {/* Exibe mensagem de erro se existir */}
+            {!post ? (
+                <p>Vazio...</p>
+            ) : (
                 <div className={style.pedidospage}>
-                    <div key={posts.id}>
-                        <div><h2> {posts.nome_pedido}
-                        </h2></div>
-                        <div><h3>Status: {posts.entrega_status}</h3></div>
-                        <div><h3>Destinatario: {posts.email}</h3></div>
-                        <div><h3>R$: {posts.preco}</h3></div>
-                        <br></br>
+                    <h2>{post.nome_pedido}</h2>
+                    <h3>Status: {post.entrega_status}</h3>
+                    <h3>Destinatário: {post.email}</h3>
+                    <h3>R$: {post.preco}</h3>
+                    <br />
+                    <form onSubmit={handleSubmit}>
                         <div>
-                            <form onSubmit={handleSubmit}>
-                                <div><button>Cancelar</button></div>
-                            </form>
-                        </div><br></br>
-
-                    </div>
+                            <button type="submit">Cancelar</button>
+                        </div>
+                    </form>
+                    <br />
                 </div>
-
-            )
-
-            }
-        </div >
-    )
+            )}
+        </div>
+    );
 }
 
-export default UmPedido
+export default UmPedido;
