@@ -5,6 +5,7 @@
 - Python -> Linguagem de programacao usada para fazer a logica do backend
 - Django Rest Framework e Django -> Frameworks usados na criacao das API backend
 - React.Js -> Biblioteca frontend usada no desenvolvimento do frontend com javascript
+- Postgresql -> Banco de dados usado para armazenar informacoes
 
 ## Este projeto NÃO inclui
 Lista de recursos não adicionados:
