@@ -2,10 +2,11 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import style from '../../style/pedidospagecss/Pedido.module.css';
+import Headers from '../../components/prepaginas/header/Header.js'
 
 function UmPedido() {
-    const [post, setPost] = useState(null); // Alterado para um único pedido
-    const [error, setError] = useState(null); // Para armazenar erros
+    const [post, setPost] = useState(null);
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
     const { id } = useParams();
 
@@ -39,9 +40,15 @@ function UmPedido() {
         }
     };
 
+    const links = [
+        { path: "/pedidos", label: "Pedidos" },
+        { path: `/produtos`, label: "Produtos" },
+    ];
+
     return (
         <div>
-            {error && <p>{error}</p>} {/* Exibe mensagem de erro se existir */}
+            <Headers links={links}/>
+            {error && <p>{error}</p>} {}
             {!post ? (
                 <p>Vazio...</p>
             ) : (

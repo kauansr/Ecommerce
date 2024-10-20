@@ -1,70 +1,54 @@
-import axios from 'axios'
-import { useState } from 'react'
-import style from '../../prepagicss/LoginForm.module.css'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate, Link } from 'react-router-dom';
+import style from '../../prepagicss/LoginForm.module.css';
+import Header from '../header/Header.js';
 
 function LoginForm() {
-
-
-    const data = { email: "", password: "" }
-    const [dataInput, setDataInput] = useState(data)
+    const [dataInput, setDataInput] = useState({ email: "", password: "" });
+    const navigate = useNavigate();
 
     const handleInput = (e) => {
-        setDataInput({ ...dataInput, [e.target.name]: e.target.value })
-    }
+        setDataInput({ ...dataInput, [e.target.name]: e.target.value });
+    };
 
-    const navigate = useNavigate()
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
+
+        if (!dataInput.email || !dataInput.password) {
+            alert("Por favor, preencha todos os campos.");
+            return;
+        }
 
         try {
-            await axios.post("http://127.0.0.1:8000/accountapi/token/", dataInput)
-                .then((res) =>
-
-
-                    localStorage.setItem("token", res.data['access'])
-
-
-                )
-                .catch((err) => console.log(err.data))
+            const res = await axios.post("http://127.0.0.1:8000/accountapi/token/", dataInput);
+            localStorage.setItem("token", res.data['access']);
+            navigate("/produtos");
         } catch (error) {
-            console.log(error)
-
+            console.error("Erro ao fazer login:", error.response ? error.response.data : error.message);
+            window.location.reload();
         }
+    };
 
-        if (localStorage.getItem("token")) {
-            navigate("/produtos")
-        }
-        else {
-            window.location.reload()
-        }
-
-    }
-
-
+    const links = [
+        { path: "/sign-up", label: "Cadastrar" },
+    ];
 
     return (
-        <div className={style.loginform}>
-            
-            <div>
+        <div>
+            <Header links={links} />
+            <div className={style.loginform}>
                 <form onSubmit={handleSubmit}>
-                    <input type='email' name='email' onChange={handleInput} placeholder='E-mail'></input><br /><br />
-                    <input type='password' name='password' onChange={handleInput} placeholder='Password'></input><br /><br />
-
+                    <input type='email' name='email' onChange={handleInput} placeholder='E-mail' required />
+                    <input type='password' name='password' onChange={handleInput} placeholder='Password' required />
                     <button type='submit'>Sign-in</button>
-
-
                 </form>
                 <ul>
-            <li>Don't have an account ?<a href="/sign-up">Sign-up</a></li>
-            </ul>
-                </div>
-
+                    <li>Don't have an account? <Link to="/sign-up">Sign-up</Link></li>
+                </ul>
+            </div>
         </div>
-    )
-
-
-
+    );
 }
 
-export default LoginForm
+export default LoginForm;

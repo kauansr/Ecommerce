@@ -4,14 +4,14 @@ from accounts.models import User
 from accounts.serializers import UsersSerializer
 from django.http import Http404
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAuthenticated
 import jwt
 from project.settings import SECRET_KEY
 
 
 class UsersAPI(APIView):
 
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
 
@@ -21,8 +21,8 @@ class UsersAPI(APIView):
         :return: Json
         """
 
-        users = User.objects.all()
-        serializer = UsersSerializer(users, many=True)
+        users = request.user
+        serializer = UsersSerializer(users)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
     

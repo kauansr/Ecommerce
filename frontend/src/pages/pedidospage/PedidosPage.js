@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useState, useEffect } from 'react'
 import style from '../../style/pedidospagecss/Pedidopage.module.css'
 import { Link } from 'react-router-dom'
+import Headers from '../../components/prepaginas/header/Header.js'
 
 function PedidosPage() {
 
@@ -33,7 +34,13 @@ function PedidosPage() {
 
     }, [])
 
+    const links = [
+        { path: `/produtos`, label: "Produtos" },
+    ];
+
     return (
+        <div>
+            <Headers links={links} />
         <div className={style.pedidospage}>
             {posts.length === 0 ? (
                 <p>Vazio...</p>
@@ -48,6 +55,7 @@ function PedidosPage() {
                     </div>
                 ))
             )}
+        </div>
         </div>
     );
     

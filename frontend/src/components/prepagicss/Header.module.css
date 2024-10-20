@@ -1,0 +1,25 @@
+.header {
+    background-color: #40abaf;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.header nav {
+    display: flex;
+    gap: 20px;
+}
+
+.header nav a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s; 
+}
+
+.header nav a:hover {
+    color: #80a8b4d3;
+}

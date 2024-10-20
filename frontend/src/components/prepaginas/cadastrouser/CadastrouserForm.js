@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useState } from 'react'
 import style from '../../prepagicss/CadastrouserForm.module.css'
 import { useNavigate } from 'react-router-dom'
+import Headers from '../header/Header'
 
 function CadastrouserForm() {
 
@@ -22,7 +23,7 @@ function CadastrouserForm() {
                 .then((res) =>
 
 
-                    navigate("/login")
+                    navigate("/")
 
                 )
                 .catch((err) => console.log(err.data))
@@ -33,10 +34,14 @@ function CadastrouserForm() {
 
 
     }
-
-
+    const links = [
+        { path: "/", label: "Login" },
+    ];
 
     return (
+
+        <div>
+            <Headers links={links}/>
         <div className={style.cadastrouserform}>
 
             <div>
@@ -50,11 +55,11 @@ function CadastrouserForm() {
 
                 </form>
                 <ul>
-            <li>Do you have an account ?<a href="/login">Sign-in</a></li>
+            <li>Do you have an account ?<a href="/">Sign-in</a></li>
             </ul>
                 </div>
 
-        </div>
+        </div></div>
     )
 
 

@@ -14,13 +14,12 @@ class UsersSerializer(serializers.ModelSerializer):
         return username
     
     def validate(self, data):
-        if self.context['request'].method == 'POST':
-            if not data.get('username') or data.get('username').strip() == '':
-                raise serializers.ValidationError({'username': 'Este campo não pode ser em branco.'})
-            if not data.get('email') or data.get('email').strip() == '':
-                raise serializers.ValidationError({'email': 'Este campo não pode ser em branco.'})
-            if not data.get('password') or data.get('password').strip() == '':
-                raise serializers.ValidationError({'password': 'Este campo não pode ser em branco.'})
+        if not data.get('username') or data.get('username') == '':
+            raise serializers.ValidationError({'username': 'Este campo não pode ser em branco.'})
+        if not data.get('email') or data.get('email') == '':
+            raise serializers.ValidationError({'email': 'Este campo não pode ser em branco.'})
+        if not data.get('password') or data.get('password') == '':
+            raise serializers.ValidationError({'password': 'Este campo não pode ser em branco.'})
     
         return data
 

@@ -1,29 +1,30 @@
-.cadastrouserform div{
+.cadastrouserform div {
     display: block;
     margin: auto;
-    margin-top: 10rem;
-    width: 50%;
+    margin-top: 4rem;
+    width: 90%;
+    max-width: 600px;
     border: 1px solid rgb(0, 0, 0);
     background-color: rgba(197, 197, 197, 0.281);
-    padding: 10rem;
+    padding: 2rem;
     border-radius: 4px;
 }
 
-.cadastrouserform ul{
+.cadastrouserform ul {
     display: flex;
     list-style-type: none;
     margin: 0;
     padding: 0;
-    justify-content: right;
-
+    justify-content: flex-end;
 }
-.cadastrouserform ul li{
+
+.cadastrouserform ul li {
     display: flex;
     padding: 15px;
     font-size: 13px;
 }
 
-.cadastrouserform ul li a{
+.cadastrouserform ul li a {
     display: flex;
     color: rgb(52, 0, 119);
     text-decoration: none;
@@ -33,23 +34,19 @@
 .cadastrouserform form input {
     display: block;
     border-radius: 4px;
-    width: 100%;
+    width: 90%;
     padding: 15px;
-    margin: auto;
-
+    margin: 10px 0;
     border: 1px solid rgb(0, 0, 0);
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1rem;
-
 }
 
 .cadastrouserform form button {
-
     display: block;
     border-radius: 4px;
     padding: 10px;
-    width: auto;
-    height: auto;
+    width: 100%;
     border: 1px solid black;
     text-decoration: none;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -57,7 +54,26 @@
 }
 
 .cadastrouserform form button:hover {
-  background-color: rgb(180, 180, 180);
-    transition: 1s;
+    background-color: rgb(39, 126, 129);
+    transition: 0.3s;
+}
 
+@media (max-width: 600px) {
+    .cadastrouserform div {
+        padding: 1.5rem;
+    }
+
+    .cadastrouserform form input {
+        font-size: 0.9rem;
+    }
+
+    .cadastrouserform form button {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .cadastrouserform div {
+        padding: 1rem;
+    }
 }

@@ -1,13 +1,15 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 import style from '../../style/produtospagecss/Produtos.module.css'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+import Headers from '../../components/prepaginas/header/Header.js'
 
 function ProdutosPage() {
 
 
     const [posts, setPosts] = useState([])
+    const [user, setUser] = useState(null)
 
     const navigate = useNavigate()
 
@@ -15,28 +17,37 @@ function ProdutosPage() {
 
         try {
 
-            const tokenauth = localStorage.getItem('token')
-            const res = await axios.get("http://127.0.0.1:8000/productapi/produtos/")
+            const tokenauth = localStorage.getItem('token');
+
+            
+            const produtosRes = await axios.get("http://127.0.0.1:8000/productapi/produtos/");
+            setPosts(produtosRes.data);
 
 
-
-            setPosts(res.data)
-
+            const userRes = await axios.get(`http://localhost:8000/accountapi/accounts/`, {
+                headers: { 'Authorization': `Bearer ${tokenauth}` }
+            });
+            setUser(userRes.data);
         } catch (error) {
-            console.log(error)
-
+            console.log('Erro ao carregar os dados', error);
         }
-
 
     }
 
 
+
     useEffect(() => {
         getPosts()
-
     }, [])
 
+    const links = [
+        { path: "/pedidos", label: "Pedidos" },
+        user ? { path: `/perfil/${user.username}`, label: "Perfil" } : null,
+    ].filter(Boolean);
+
     return (
+        <div>
+            <Headers links={links}/>
         <div className={style.produtospage}>
             {posts.length === 0 ? (
                 <p>Carregando...</p>
@@ -58,6 +69,7 @@ function ProdutosPage() {
                     </div>
                 ))
             )}
+        </div>
         </div>
     );
 

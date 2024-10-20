@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import style from '../../style/perfilpagecss/Perfil.module.css';
+import Headers from '../../components/prepaginas/header/Header.js'
 
 function Perfil() {
     const [posts, setPosts] = useState(null);
@@ -55,7 +56,7 @@ function Perfil() {
             );
             setPosts({ ...posts, username, email });
             localStorage.removeItem('token') 
-            navigate("/login");
+            navigate("/");
             alert("Dados atualizados com sucesso!");
         } catch (err) {
             setError('Erro ao atualizar os dados');
@@ -75,7 +76,7 @@ function Perfil() {
                 headers: { 'Authorization': `Bearer ${tokenauth}` }
             });
             localStorage.removeItem('token')
-            navigate("/login");
+            navigate("/");
         } catch (err) {
             setError('Erro ao deletar a conta');
         }
@@ -84,7 +85,14 @@ function Perfil() {
     if (loading) return <p>Carregando...</p>;
     if (error) return <p>Erro: {error}</p>;
 
+    const links = [
+        { path: "/pedidos", label: "Pedidos" },
+        { path: `/produtos`, label: "Produtos" },
+    ];
+
     return (
+        <div>
+            <Headers links={links}/>
         <div>
             {posts ? (
                 <div className={style.perfilpage}>
@@ -126,7 +134,7 @@ function Perfil() {
             ) : (
                 <p>Vazio...</p>
             )}
-        </div>
+        </div></div>
     );
     
 }
