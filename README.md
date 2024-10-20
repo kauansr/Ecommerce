@@ -1,5 +1,5 @@
 # Loja
-- Site focado em vendas
+- Sistema de vendas onde voce pode criar, ler, alterar e deletar usuarios, pedidos e produtos
 
 ## Tecnologias usadas
 - Python -> Linguagem de programacao usada para fazer a logica do backend
@@ -27,4 +27,5 @@ Rodar o Backend:
 
 Rodar o frontend:
 - cd frontend
+- npm install
 - npm start
