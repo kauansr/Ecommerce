@@ -63,6 +63,7 @@ function ProdutosPage() {
                         <p className={style.nome}>{post.nome}</p>
                         <p className={style.categoria}>{post.categoria}</p>
                         <p className={style.descricao}>{post.descricao}</p>
+                        <p className={style.descricao}>Estoque: {post.quantidade}</p>
                         <Link to={`/produto/${post.id}`}>
                             <button className={style.botao}>R$: {post.preco}</button>
                         </Link>

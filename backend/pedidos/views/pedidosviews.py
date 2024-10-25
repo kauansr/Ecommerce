@@ -5,8 +5,6 @@ from django.http import Http404
 from pedidos.models import Pedidos
 from pedidos.serializers import PedidosSerializers
 from rest_framework import status
-import jwt
-from project.settings import SECRET_KEY
 from products.models import Produtos
 from accounts.models import User
 
@@ -14,37 +12,12 @@ class PedidosAPI(APIView):
 
     permission_classes = [IsAuthenticated]
 
-    def decode_jwttoken(self):
-
-        jwt_encode = self.request.META['HTTP_AUTHORIZATION']
-
-     
-        jwt_clean = jwt_encode.split(" ")
-
-        jwt_bearer = jwt_clean[0]
- 
-        if not jwt_bearer:
-            raise ValueError('Token invalido!!')
-        
-        if jwt_bearer != 'Bearer':
-            raise ValueError('Inavlid token !!!')
-
-        
-        jwt_decode = jwt.decode(jwt_clean[1], SECRET_KEY, algorithms=['HS256'])
- 
-
-        return (jwt_decode, None)
-
     def get(self, request):
-
-        data_user = self.decode_jwttoken()
-
-        
-
-        if not data_user[0]['email']:
+        if not request.user.email:
             return Response(status=status.HTTP_404_NOT_FOUND)
         
-        ped = Pedidos.objects.filter(user_id=data_user[0]['id'])
+        
+        ped = Pedidos.objects.filter(user_id=request.user.id)
      
         serializer = PedidosSerializers(ped, many=True)
 
@@ -56,16 +29,15 @@ class PedidosAPI(APIView):
     
     def post(self, request):
 
-        data_user = self.decode_jwttoken()
 
          
 
-        if not data_user[0]['email']:
+        if not request.user.email:
             return Response(status=status.HTTP_404_NOT_FOUND)
          
 
         id_prod = request.data['id']
-        id_user = User.objects.filter(id=data_user[0]['id']).first()
+        id_user = User.objects.filter(id=request.user.id).first()
 
         if not id_user.email:
             return Response(status=status.HTTP_404_NOT_FOUND)
@@ -73,6 +45,11 @@ class PedidosAPI(APIView):
         
         produt = Produtos.objects.filter(id=id_prod).first()
 
+        if produt.quantidade == 0:
+            return Response({'msg': 'Product empty!'}, status=status.HTTP_400_BAD_REQUEST)
+
+        produt.quantidade -= 1
+        produt.save()
        
         data = {
             'nome_pedido': produt.nome,
@@ -103,29 +80,11 @@ class PedidoAPI(APIView):
         except Pedidos.DoesNotExist:
             raise Http404
     
-
-    def decode_jwttoken(self):
-
-        jwt_encode = self.request.META['HTTP_AUTHORIZATION']
-
-        jwt_clean = jwt_encode.split(" ")
-
-        jwt_bearer = jwt_clean[0]
-        if not jwt_bearer:
-            raise ValueError('Token invalido!!')
-        
-        if jwt_bearer != 'Bearer':
-            raise ValueError('Inavlid token !!!')
-
-        jwt_decode = jwt.decode(jwt_clean[1], SECRET_KEY, algorithms=['HS256'])
-
-        return (jwt_decode, None)
     
     def get(self, request, pk):
 
-        data_user = self.decode_jwttoken()
         
-        if not data_user[0]['email']:
+        if not request.user.email:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         pedido = self.get_object(pk=pk)
@@ -135,13 +94,18 @@ class PedidoAPI(APIView):
     
     def delete(self, request, pk):
 
-        data_user = self.decode_jwttoken()
         
-        if not data_user[0]['email']:
+        if not request.user.email:
             return Response(status=status.HTTP_404_NOT_FOUND)
     
         
         pedido = self.get_object(pk=pk)
+
+        produt = Produtos.objects.filter(nome=pedido).first()
+
+        produt.quantidade += 1
+        produt.save()
+
         pedido.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)

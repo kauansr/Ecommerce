@@ -5,9 +5,6 @@ from accounts.serializers import UsersSerializer
 from django.http import Http404
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-import jwt
-from project.settings import SECRET_KEY
-
 
 class UsersAPI(APIView):
 
@@ -31,29 +28,6 @@ class UsersAPI(APIView):
 class UserAPI(APIView):
 
     permission_classes = [IsAuthenticated]
-
-    def decode_jwttoken(self):
-
-        """
-        Decodifica o token jwt do usuario
-
-        :return: Json
-        """
-
-        jwt_encode = self.request.META['HTTP_AUTHORIZATION']
-
-        jwt_clean = jwt_encode.split(" ")
-
-        if not jwt_clean[0]:
-            raise ValueError('Token invalido!!')
-        
-        
-        if jwt_clean[0] != 'Bearer':
-            raise ValueError('Inavlid token !!!')
-
-        jwt_decode = jwt.decode(jwt_clean[1], SECRET_KEY, algorithms=['HS256'])
-
-        return (jwt_decode, None)
 
 
     def get_object(self, username):
@@ -84,7 +58,7 @@ class UserAPI(APIView):
         data_usertoken = self.decode_jwttoken()
 
 
-        if data_usertoken[0]['username'] != username:
+        if request.user.username != username:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         user = self.get_object(username=username)
@@ -103,9 +77,7 @@ class UserAPI(APIView):
         :return: Json
         """
 
-        data_usertoken = self.decode_jwttoken()
-
-        if data_usertoken[0]['username'] != username:
+        if request.user.username != username:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         user = self.get_object(username=username)
@@ -126,9 +98,7 @@ class UserAPI(APIView):
         :return: Response(http204)
         """
 
-        data_usertoken = self.decode_jwttoken()
-
-        if data_usertoken[0]['username'] != username:
+        if request.user.username != username:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         user = self.get_object(username=username)
