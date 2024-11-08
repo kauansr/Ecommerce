@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 import style from '../../style/produtospagecss/Produtos.module.css'
-import { useNavigate, useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import Headers from '../../components/prepaginas/header/Header.js'
 
@@ -11,7 +10,7 @@ function ProdutosPage() {
     const [posts, setPosts] = useState([])
     const [user, setUser] = useState(null)
 
-    const navigate = useNavigate()
+  
 
     const getPosts = async () => {
 
@@ -42,36 +41,43 @@ function ProdutosPage() {
 
     const links = [
         { path: "/pedidos", label: "Pedidos" },
+        {path: '/carrinho', label: 'Carrinho'},
         user ? { path: `/perfil/${user.username}`, label: "Perfil" } : null,
     ].filter(Boolean);
 
     return (
-        <div>
-            <Headers links={links}/>
-        <div className={style.produtospage}>
-            {posts.length === 0 ? (
-                <p>Carregando...</p>
-            ) : (
-                posts.map((post) => (
-                    <div key={post.id} className={style.produto}>
+        <main>
+    <Headers links={links}/>
+    <section className={style.produtospage}>
+        {posts.length === 0 ? (
+            <p>Carregando...</p>
+        ) : (
+            posts.map((post) => (
+                <article key={post.id} className={style.produto}>
+                    <figure>
                         <img 
                             src={`http://127.0.0.1:8000${post.produto_imagem}`} 
                             alt={post.nome} 
-                            width='150' 
-                            height='150' 
+                            width='200' 
+                            height='200' 
                         />
-                        <p className={style.nome}>{post.nome}</p>
+                    </figure>
+                    <div className={style.produtoInfo}>
+                        <h2 style={style.nome}>{post.nome}</h2>
                         <p className={style.categoria}>{post.categoria}</p>
                         <p className={style.descricao}>{post.descricao}</p>
-                        <p className={style.descricao}>Estoque: {post.quantidade}</p>
+                        <p className={style.quantidade}>Estoque: {post.quantidade}</p>
+                    </div>
+                    <footer>
                         <Link to={`/produto/${post.id}`}>
                             <button className={style.botao}>R$: {post.preco}</button>
                         </Link>
-                    </div>
-                ))
-            )}
-        </div>
-        </div>
+                    </footer>
+                </article>
+            ))
+        )}
+    </section>
+</main>
     );
 
 

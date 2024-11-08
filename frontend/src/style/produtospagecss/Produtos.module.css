@@ -1,87 +1,59 @@
 .produtospage {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    gap: 20px; 
     padding: 20px;
 }
 
 .produto {
-    background-color: #ffffff;
-    border: 1px solid #ddd;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+    flex: 1 1 calc(20% - 20px);
+    height: auto;
+}
+
+.produto figure {
+    margin: 0;
+    padding: 0;
+}
+
+.produto img {
     border-radius: 5px;
-    padding: 10px;
-    margin: 10px;
-    width: calc(25% - 20px);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    text-align: center; 
-    height: 450px;
+    max-width: 100%;
+    height: auto;
 }
 
-.produto:hover {
-    transform: scale(1.05);
+.produtoInfo {
+    margin-top: 10px;
 }
 
-img{
-    border-radius: 25%;
+.produtoInfo .descricao,
+.produtoInfo .categoria,
+.produtoInfo .quantidade {
+    font-size: 1em;
+    color: #555;
+    margin: 0;
+    margin-top: 1.4rem;
 }
 
-.nome {
-    font-size: 1.2em;
-    margin: 10px 0;
-}
-
-.categoria {
-    color: #777;
-    margin: 5px 0;
+.produtoInfo .quantidade {
+    font-weight: bold;
+    margin-bottom: 2rem
 }
 
 .descricao {
-    font-size: 0.9em; 
-    color: #555;      
-    margin: 5px 0;   
-    margin-top: 2rem;
-    max-height: 60px;
-    overflow: hidden;  
-    text-overflow: ellipsis; 
     display: -webkit-box;
-    -webkit-box-orient: vertical;
-    white-space: break-spaces;
-}
+    -webkit-line-clamp: 4;      
+    -webkit-box-orient: vertical;  
+    overflow: hidden;              
+    text-overflow: ellipsis;      
+  }
 
 .botao {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: 4rem;
-}
-
-.botao:hover {
-    background-color: #45a049;
-}
-
-/* Responsividade para telas menores */
-@media (max-width: 1024px) {
-    .produto {
-        width: calc(50% - 20px); 
-    }
-}
-
-@media (max-width: 768px) {
-    .produto {
-        width: calc(33.33% - 20px); 
-    }
-}
-
-@media (max-width: 480px) {
-    .produto {
-        width: calc(50% - 20px); 
-    }
+    font-size: 1.4rem;
+    font-weight: 400;
+    background-color: #119c95;
 }

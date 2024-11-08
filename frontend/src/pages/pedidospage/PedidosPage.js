@@ -36,6 +36,7 @@ function PedidosPage() {
 
     const links = [
         { path: `/produtos`, label: "Produtos" },
+        {path: '/carrinho', label: 'Carrinho'},
     ];
 
     return (
@@ -49,8 +50,9 @@ function PedidosPage() {
                     <div key={post.id}>
                         <Link to={`/pedido/${post.id}`}>
                         <p>ID: {post.id}</p> </Link>
-                        <p>Nome do Pedido: {post.nome_pedido}</p>
-                        <p>Preço: {post.preco}</p>
+                        <p>E-mail: {post.email}</p>
+                        <p>Criado em: {new Date(post.data_pedido).toLocaleDateString()}</p>
+                        <p>Preço: {post.total}</p>
                         <p>Status de Entrega: {post.entrega_status}</p>
                     </div>
                 ))

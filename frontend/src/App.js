@@ -6,6 +6,7 @@ import PedidosPage from './pages/pedidospage/PedidosPage';
 import UmProduto from './pages/productpage/ProdutoPage';
 import UmPedido from './pages/pedidospage/PedidoPage';
 import Perfil from './pages/perfilpage/PerfilPage';
+import Carrinho from './pages/productpage/Carrinho'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route exact path='/produto/:id' element={<UmProduto />} />
           <Route exact path='/pedido/:id' element={<UmPedido />} />
           <Route exact path='/perfil/:id' element={<Perfil />} />
+          <Route exact path='/carrinho' element={<Carrinho />} />
         </Routes>
 
       </Router>

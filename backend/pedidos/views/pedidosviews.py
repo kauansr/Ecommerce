@@ -1,169 +1,132 @@
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from django.http import Http404
-from pedidos.models import Pedidos
-from pedidos.serializers import PedidosSerializers
 from rest_framework import status
+from django.http import Http404
+from pedidos.models import Pedidos, ItemPedido
+from pedidos.serializers import PedidosSerializers, ItemPedidoSerializer
 from products.models import Produtos
-from accounts.models import User
 
 class PedidosAPI(APIView):
-
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
+        
         if not request.user.email:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+        
+        ped = Pedidos.objects.filter(cliente=request.user.pk)
         
         
-        ped = Pedidos.objects.filter(user_id=request.user.id)
-     
         serializer = PedidosSerializers(ped, many=True)
-
         return Response(serializer.data)
-        
-        
 
-            
-    
     def post(self, request):
-
-
-         
-
+       
         if not request.user.email:
             return Response(status=status.HTTP_404_NOT_FOUND)
-         
 
-        id_prod = request.data['id']
-        id_user = User.objects.filter(id=request.user.id).first()
-
-        if not id_user.email:
-            return Response(status=status.HTTP_404_NOT_FOUND)
         
+        itens_data = request.data.get('itens', [])
+
         
-        produt = Produtos.objects.filter(id=id_prod).first()
+        if not itens_data:
+            return Response({'msg': 'É necessário fornecer itens para o pedido!'}, status=status.HTTP_400_BAD_REQUEST)
 
-        if produt.quantidade == 0:
-            return Response({'msg': 'Product empty!'}, status=status.HTTP_400_BAD_REQUEST)
-
-        produt.quantidade -= 1
-        produt.save()
-       
-        data = {
-            'produto_id': produt.pk,
-            'nome_pedido': produt.nome,
-            'preco': produt.preco,
-            'user_id': request.user.id,
-            'email': id_user.email
-  
+        
+        pedido_data = {
+            'cliente': request.user.id,
+            'email': request.user.email,
         }
-        serializer = PedidosSerializers(data=data)
+
+        
+        serializer = PedidosSerializers(data=pedido_data)
+        
         if serializer.is_valid(raise_exception=True):
-            serializer.save()
+            pedido = serializer.save()
+
+            total = 0.00
+            
+            for item_data in itens_data:
+                try:
+                    
+                    produto = Produtos.objects.get(id=item_data['produto'])
+                except Produtos.DoesNotExist:
+                    return Response({'msg': f"Produto com id {item_data['produto']} não encontrado."}, status=status.HTTP_404_NOT_FOUND)
+
+                
+                if produto.quantidade < item_data['quantidade']:
+                    return Response({'msg': 'Quantidade insuficiente para o produto!'}, status=status.HTTP_400_BAD_REQUEST)
+
+                
+                produto.quantidade -= item_data['quantidade']
+                produto.save()
+
+                
+                items_pedido = ItemPedido.objects.create(
+                    pedido=pedido,
+                    produto=produto,
+                    quantidade=item_data['quantidade'],
+                    preco_unitario=produto.preco,
+                )
+
+                total += items_pedido.total_item
+                
+            try:
+                pedido.total = total
+                pedido.save()
+            except Exception as e:
+                print(f"Erro ao salvar o pedido: {e}")
+                return Response({'msg': 'Erro ao salvar o pedido!'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class PedidoAPI(APIView):
-
     permission_classes = [IsAuthenticated]
 
-    
-
     def get_object(self, pk):
-
         try:
             return Pedidos.objects.get(pk=pk)
-        
         except Pedidos.DoesNotExist:
             raise Http404
     
-    
     def get(self, request, pk):
-
-        
-        if not request.user.email:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-
+       
         pedido = self.get_object(pk=pk)
+
+        if pedido.cliente.id != request.user.id:
+            return Response({'msg': 'Você não tem permissão para visualizar este pedido.'}, status=status.HTTP_403_FORBIDDEN)
+
         serializer = PedidosSerializers(pedido)
 
-        return Response(serializer.data)
-    
-    def delete(self, request, pk):
+        itens = ItemPedido.objects.filter(pedido=pedido)
 
         
-        if not request.user.email:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-    
-        
-        pedido = self.get_object(pk=pk)
-
-        produt = Produtos.objects.filter(nome=pedido).first()
-
-        produt.quantidade += 1
-        produt.save()
-
-        pedido.delete()
-
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-class PedidosAdmAPI(APIView):
-
-    permission_classes = [IsAdminUser]
-
-    def get(self, request):
-
-        pedidos = Pedidos.objects.all()
-        serializer = PedidosSerializers(pedidos, many=True)
-
-        return Response(serializer.data)
-
-
-class PedidoAdmAPI(APIView):
-
-    permission_classes = [IsAdminUser]
-
-
-    def get_object(self, pk):
-
-        try:
-            return Pedidos.objects.get(pk=pk)
-        
-        except Pedidos.DoesNotExist:
-            raise Http404
-
-
-    def get(self, request, pk):
-
-
-        pedido = self.get_object(pk)
-        serializer = PedidosSerializers(pedido)
-
-
-        return Response(serializer.data)
-
-
-    def put(self, request, pk):
+        item_serializer = ItemPedidoSerializer(itens, many=True)
 
         
-        pedido = self.get_object(pk)
-        serializer = PedidosSerializers(pedido, data=request.data)
-
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response({
+            'pedido': serializer.data,
+            'itens': item_serializer.data 
+        })
 
     def delete(self, request, pk):
-
+        pedido = self.get_object(pk=pk)
 
         
-        pedido = self.get_object(pk=pk)
+        if pedido.cliente.id != request.user.id:
+            return Response({'msg': 'Você não tem permissão para deletar este pedido.'}, status=status.HTTP_403_FORBIDDEN)
+
+        
+        for item in pedido.itens.all():
+            produto = item.produto
+            produto.quantidade += item.quantidade
+            produto.save()
+
         pedido.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)

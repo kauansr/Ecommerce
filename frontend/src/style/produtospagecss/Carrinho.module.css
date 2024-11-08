@@ -1,0 +1,52 @@
+/* Carrinho.module.css */
+.carrinhoPage {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+.tabelaCarrinho {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.tabelaCarrinho th, .tabelaCarrinho td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+
+.tabelaCarrinho th {
+    background-color: #f5f5f5;
+}
+
+.totalCarrinho {
+    text-align: right;
+    margin-top: 20px;
+    font-size: 1.2em;
+}
+
+.botoesCarrinho {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

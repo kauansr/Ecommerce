@@ -88,6 +88,7 @@ function Perfil() {
     const links = [
         { path: "/pedidos", label: "Pedidos" },
         { path: `/produtos`, label: "Produtos" },
+        {path: '/carrinho', label: 'Carrinho'},
     ];
 
     return (

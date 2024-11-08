@@ -12,7 +12,6 @@ Lista de recursos não adicionados:
 
 - Metodos de pagamento
 - Calculo de frete
-- Calculo total de pedidos
 
 
 ## Como usar windows ?
