@@ -57,8 +57,8 @@ function ProdutosPage() {
                         <img 
                             src={`http://127.0.0.1:8000${post.produto_imagem}`} 
                             alt={post.nome} 
-                            width='100' 
-                            height='100' 
+                            width='150' 
+                            height='150' 
                         />
                         <p className={style.nome}>{post.nome}</p>
                         <p className={style.categoria}>{post.categoria}</p>
