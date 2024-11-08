@@ -1,5 +1,6 @@
 from django.db import models
 from accounts.models import User
+from products.models import Produtos
 
 status_entregachoice = [
     ('PREPARANDO...','Preparando...'),
@@ -8,7 +9,8 @@ status_entregachoice = [
 ]
 
 class Pedidos(models.Model):
-    nome_pedido = models.CharField(max_length=50)
+    produto_id = models.ForeignKey(Produtos, on_delete=models.CASCADE, related_name='products')
+    nome_pedido = models.CharField(max_length=255, blank=False)
     preco = models.FloatField()
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users')
     email = models.EmailField(max_length=255)

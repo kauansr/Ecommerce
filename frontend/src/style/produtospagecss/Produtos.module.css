@@ -1,7 +1,7 @@
 .produtospage {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between;
     padding: 20px;
 }
 
@@ -11,9 +11,13 @@
     border-radius: 5px;
     padding: 10px;
     margin: 10px;
-    width: calc(33.33% - 20px);
+    width: calc(25% - 20px);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    text-align: center; 
 }
 
 .produto:hover {
@@ -40,7 +44,6 @@
     display: -webkit-box;
     -webkit-box-orient: vertical;
     white-space: break-spaces;
-    max-height: 35px;
 }
 
 .botao {
@@ -57,14 +60,21 @@
     background-color: #45a049;
 }
 
+/* Responsividade para telas menores */
+@media (max-width: 1024px) {
+    .produto {
+        width: calc(50% - 20px); 
+    }
+}
+
 @media (max-width: 768px) {
     .produto {
-        flex: 1 1 calc(50% - 20px);
+        width: calc(33.33% - 20px); 
     }
 }
 
 @media (max-width: 480px) {
     .produto {
-        flex: 1 1 100%;
+        width: calc(50% - 20px); 
     }
 }

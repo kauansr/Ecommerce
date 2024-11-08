@@ -52,9 +52,10 @@ class PedidosAPI(APIView):
         produt.save()
        
         data = {
+            'produto_id': produt.pk,
             'nome_pedido': produt.nome,
             'preco': produt.preco,
-            'user_id': id_user.id,
+            'user_id': request.user.id,
             'email': id_user.email
   
         }

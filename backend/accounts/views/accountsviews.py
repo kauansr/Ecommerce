@@ -55,9 +55,7 @@ class UserAPI(APIView):
         :return: Json
         """
 
-        data_usertoken = self.decode_jwttoken()
-
-
+      
         if request.user.username != username:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
