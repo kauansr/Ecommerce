@@ -9,7 +9,7 @@ This is an e-commerce platform built using **Python** (with Django and Django RE
 - **Database**: PostgreSQL
 - **API Requests**: Axios
 - **Authentication**: JWT (JSON Web Tokens)
-- **Testing**: TestCase(Django test)
+- **Testing**: TestCase (Django test)
 
 ## Features
 
@@ -40,15 +40,32 @@ This is an e-commerce platform built using **Python** (with Django and Django RE
 2. Follow the instructions:
     ```bash
 
-   python -m venv venv
+    cd Ecommerce
 
-   venv\Scripts\activate
+    python -m venv venv
 
-   pip install -r requirements.txt
+    venv\Scripts\activate
 
-   cd Ecommerce/backend
+    pip install -r requirements.txt
 
-   python manage.py runserver
+    Create a .env file in the root directory of the project and add the following:
+
+    DB_ENGINE=django.db.backends.postgresql
+    DB_NAME=your_database_name
+    DB_USER=your_database_user
+    DB_PASSWORD=your_database_password
+    DB_HOST=your_database_host
+    DB_PORT=your_database_port
+
+    Change the .env data with your postgreSQL credentials
+
+    cd backend
+
+    python manage.py makemigrations
+
+    python manage.py migrate
+
+    python manage.py runserver
    ```
 
 ### Frontend (React.js)
@@ -62,5 +79,3 @@ This is an e-commerce platform built using **Python** (with Django and Django RE
 
     npm start
     ```
-
-Don't forget to update the database configuration in the "DATABASES" section of "project/settings.py" with your PostgreSQL credentials.
