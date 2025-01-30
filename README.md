@@ -50,7 +50,8 @@ This is an e-commerce platform built using **Python** (with Django and Django RE
 
     Create a .env file in the root directory of the project and add the following:
 
-    DB_ENGINE=django.db.backends.postgresql
+    DEBUG=True
+    SECRET_KEY=your_secret_key
     DB_NAME=your_database_name
     DB_USER=your_database_user
     DB_PASSWORD=your_database_password
