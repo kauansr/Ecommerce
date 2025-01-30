@@ -124,11 +124,15 @@ function Perfil() {
                             <button type="submit">Mudar Dados</button>
                         </form>
     
-                        {}
+                        
                         <div className={style['button-container']}>
                             <form onSubmit={handleDelete}>
                                 <button type="submit">Deletar Conta</button>
                             </form>
+
+                            
+                                <button onClick={() => navigate('/minhas-avaliacoes')}>minhas Avaliações</button>
+                            
                         </div>
                     </div>
                 </div>

@@ -1,7 +1,71 @@
+/* Estilo para a seção de filtro */
+.filtro {
+    width: 100%;
+    max-width: 15rem;  
+    margin: 0 auto 30px auto; 
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.filtro h3 {
+    width: 100%;
+    text-align: center;
+    font-size: 1.6rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.filtro label {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.filtro input,
+.filtro select {
+    width: 100%;
+    max-width: 200px;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.filtro input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.filtro button {
+    width: 100%;
+    max-width: 220px;  
+    padding: 12px;
+    background-color: #119c95;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.filtro button:hover {
+    background-color: #0c7c73;
+}
+
+/* Estilo para a seção de produtos */
 .produtospage {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px; 
+    gap: 20px;
     padding: 20px;
 }
 
@@ -41,19 +105,44 @@
 
 .produtoInfo .quantidade {
     font-weight: bold;
-    margin-bottom: 2rem
+    margin-bottom: 2rem;
 }
 
 .descricao {
     display: -webkit-box;
-    -webkit-line-clamp: 4;      
-    -webkit-box-orient: vertical;  
-    overflow: hidden;              
-    text-overflow: ellipsis;      
-  }
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 .botao {
     font-size: 1.4rem;
     font-weight: 400;
     background-color: #119c95;
+}
+
+@media (max-width: 768px) {
+    .produtospage {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .produto {
+        flex: 1 1 100%;
+        max-width: 90%;
+        margin-bottom: 20px;
+    }
+
+    .filtro {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .filtro input,
+    .filtro select,
+    .filtro button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
 }

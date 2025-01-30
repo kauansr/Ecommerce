@@ -6,14 +6,15 @@ from django.http import Http404
 from pedidos.models import Pedidos, ItemPedido
 from pedidos.serializers import PedidosSerializers, ItemPedidoSerializer
 from products.models import Produtos
+from decimal import Decimal
 
 class PedidosAPI(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
         
-        if not request.user.email:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+        if not request.user.is_authenticated:
+            return Response({"detail": "Autenticação necessária."}, status=status.HTTP_401_UNAUTHORIZED)
 
         
         ped = Pedidos.objects.filter(cliente=request.user.pk)
@@ -24,8 +25,8 @@ class PedidosAPI(APIView):
 
     def post(self, request):
        
-        if not request.user.email:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+        if not request.user.is_authenticated:
+            return Response({"detail": "Autenticação necessária."}, status=status.HTTP_401_UNAUTHORIZED)
 
         
         itens_data = request.data.get('itens', [])
@@ -46,7 +47,7 @@ class PedidosAPI(APIView):
         if serializer.is_valid(raise_exception=True):
             pedido = serializer.save()
 
-            total = 0.00
+            total = Decimal("0.00")
             
             for item_data in itens_data:
                 try:
@@ -98,8 +99,8 @@ class PedidoAPI(APIView):
        
         pedido = self.get_object(pk=pk)
 
-        if pedido.cliente.id != request.user.id:
-            return Response({'msg': 'Você não tem permissão para visualizar este pedido.'}, status=status.HTTP_403_FORBIDDEN)
+        if not request.user.is_authenticated:
+            return Response({"detail": "Autenticação necessária."}, status=status.HTTP_401_UNAUTHORIZED)
 
         serializer = PedidosSerializers(pedido)
 
@@ -118,8 +119,8 @@ class PedidoAPI(APIView):
         pedido = self.get_object(pk=pk)
 
         
-        if pedido.cliente.id != request.user.id:
-            return Response({'msg': 'Você não tem permissão para deletar este pedido.'}, status=status.HTTP_403_FORBIDDEN)
+        if not request.user.is_authenticated:
+            return Response({"detail": "Autenticação necessária."}, status=status.HTTP_401_UNAUTHORIZED)
 
         
         for item in pedido.itens.all():

@@ -15,15 +15,15 @@ function Carrinho() {
     }, []);
 
     useEffect(() => {
-        
         const totalCarrinho = carrinho.reduce((acc, item) => {
-            const preco = item.produto?.preco || 0;  
-            const quantidade = item.quantidade || 0; 
+            const preco = parseFloat(item.produto?.preco) || 0;
+            const quantidade = item.quantidade || 0;
             return acc + (preco * quantidade);
         }, 0);
+
+       
         setTotal(totalCarrinho);
     }, [carrinho]);
-
 
     const removerItem = (id) => {
         const novoCarrinho = carrinho.filter((item) => item.produto.id !== id);
@@ -72,6 +72,14 @@ function Carrinho() {
         }
     };
 
+    const formatarPreco = (valor) => {
+        return valor.toLocaleString('pt-BR', {
+            style: 'decimal',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 50
+        })
+    };
+
     const links = [
         { path: "/pedidos", label: "Pedidos" },
         { path: `/produtos`, label: "Produtos" },
@@ -100,11 +108,9 @@ function Carrinho() {
                                 {carrinho.map((item) => (
                                     <tr key={item.produto.id}>
                                         <td>{item.produto.nome}</td>
-                                        <td>R$: {item.produto.preco?.toFixed(2) || "0.00"}</td>
-                                        <td>
-                                           {item.quantidade}
-                                        </td>
-                                        <td>R$: {(item.produto.preco * item.quantidade).toFixed(2) || "0.00"}</td>
+                                        <td>R$: {formatarPreco(parseFloat(item.produto.preco))}</td>
+                                        <td>{item.quantidade}</td>
+                                        <td>R$: {formatarPreco(parseFloat(item.produto.preco) * item.quantidade)}</td>
                                         <td>
                                             <button onClick={() => removerItem(item.produto.id)}>Remover</button>
                                         </td>
@@ -114,7 +120,7 @@ function Carrinho() {
                         </table>
 
                         <div className={style.totalCarrinho}>
-                            <h3>Total: R$: {total.toFixed(2)}</h3>
+                            <h3>Total: R$: {formatarPreco(total)}</h3>
                         </div>
 
                         <div className={style.botoesCarrinho}>
