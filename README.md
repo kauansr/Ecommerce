@@ -35,8 +35,11 @@ This is an e-commerce platform built using **Python** (with Django and Django RE
 1. Clone the repository:
    ```bash
    git clone https://github.com/kauansr/Ecommerce.git
+    ```
 
-   
+2. Follow the instructions:
+    ```bash
+
    python -m venv venv
 
    venv\Scripts\activate
@@ -48,7 +51,10 @@ This is an e-commerce platform built using **Python** (with Django and Django RE
    python manage.py runserver
    ```
 
-2. Frontend (React.js)
+### Frontend (React.js)
+
+1. Follow the instructions:
+
     ```bash
     cd frontend
 
